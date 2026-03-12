@@ -181,7 +181,7 @@ export interface CashTransaction {
   createdAt: string;
 }
 
-// Auth
+// Auth (rotas do backend: /api/v1/auth/*)
 export const authApi = {
   login: async (email: string, password: string) => {
     const { data } = await apiClient.post<{
@@ -198,6 +198,20 @@ export const authApi = {
     docType: string;
   }) => {
     const { data } = await apiClient.post("/auth/register", payload);
+    return data;
+  },
+  verifyEmail: async (token: string) => {
+    const { data } = await apiClient.get<{ message: string }>(
+      "/auth/verify-email",
+      { params: { token } }
+    );
+    return data;
+  },
+  refresh: async (refreshToken: string) => {
+    const { data } = await apiClient.post<{
+      accessToken: string;
+      refreshToken: string;
+    }>("/auth/refresh", { refreshToken });
     return data;
   },
 };

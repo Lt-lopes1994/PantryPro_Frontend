@@ -53,7 +53,7 @@ export function RegisterForm() {
             type="text"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full px-4 py-2.5 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-400 outline-none"
+            className="w-full px-4 py-2.5 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-400 outline-none text-black placeholder:text-gray-500"
             required
           />
         </div>
@@ -65,7 +65,7 @@ export function RegisterForm() {
             type="email"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="w-full px-4 py-2.5 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-400 outline-none"
+            className="w-full px-4 py-2.5 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-400 outline-none text-black placeholder:text-gray-500"
             required
           />
         </div>
@@ -77,7 +77,7 @@ export function RegisterForm() {
             type="text"
             value={form.personalId}
             onChange={(e) => setForm({ ...form, personalId: e.target.value })}
-            className="w-full px-4 py-2.5 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-400 outline-none"
+            className="w-full px-4 py-2.5 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-400 outline-none text-black placeholder:text-gray-500"
             placeholder="00000000000"
             required
           />
@@ -90,7 +90,7 @@ export function RegisterForm() {
             type="password"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
-            className="w-full px-4 py-2.5 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-400 outline-none"
+            className="w-full px-4 py-2.5 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-400 outline-none text-black placeholder:text-gray-500"
             minLength={6}
             required
           />
