@@ -42,6 +42,7 @@ Base URL do backend: `NEXT_PUBLIC_API_URL` (ex: `http://localhost:3000/api/v1` o
 | `/recipes` | `/recipes` | POST |
 | `/recipes/:id?restaurantId=` | `/recipes/:id?restaurantId=` | GET, DELETE |
 | `/recipes/:id/cost?restaurantId=` | `/recipes/:id/cost?restaurantId=` | GET |
+| `/recipes/:id/copy?restaurantId=` | `/recipes/:id/copy?restaurantId=` | POST (body: `{ targetRestaurantId }`) |
 
 ## Fluxo de Caixa
 | Frontend | Backend | Método |

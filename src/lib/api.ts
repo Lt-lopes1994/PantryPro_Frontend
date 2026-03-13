@@ -362,6 +362,18 @@ export const recipesApi = {
     });
     return data;
   },
+  copyToRestaurant: async (
+    id: number,
+    restaurantId: number,
+    targetRestaurantId: number
+  ) => {
+    const { data } = await apiClient.post<Recipe>(
+      `/recipes/${id}/copy`,
+      { targetRestaurantId },
+      { params: { restaurantId } }
+    );
+    return data;
+  },
 };
 
 // Cash Flow

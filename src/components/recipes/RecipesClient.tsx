@@ -10,7 +10,7 @@ import {
 } from "@/lib/api";
 
 export function RecipesClient() {
-  const { currentRestaurant } = useRestaurant();
+  const { currentRestaurant, restaurants } = useRestaurant();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [stockItems, setStockItems] = useState<StockItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -31,8 +31,13 @@ export function RecipesClient() {
     items: [{ stockItemId: 0, itemName: "", quantity: 0 }],
   });
   const [error, setError] = useState("");
+  const [copyTargetId, setCopyTargetId] = useState<number | null>(null);
+  const [copying, setCopying] = useState(false);
 
   const restaurantId = currentRestaurant?.id;
+  const otherRestaurants = restaurants.filter(
+    (r) => r.id !== restaurantId
+  );
 
   useEffect(() => {
     if (restaurantId) {
@@ -134,6 +139,26 @@ export function RecipesClient() {
   function removeItem(index: number) {
     if (form.items.length <= 1) return;
     setForm({ ...form, items: form.items.filter((_, i) => i !== index) });
+  }
+
+  async function handleCopyToRestaurant() {
+    if (!selectedRecipe || !restaurantId || !copyTargetId) return;
+    setError("");
+    setCopying(true);
+    try {
+      await recipesApi.copyToRestaurant(
+        selectedRecipe.id,
+        restaurantId,
+        copyTargetId
+      );
+      setCopyTargetId(null);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Erro ao copiar receita"
+      );
+    } finally {
+      setCopying(false);
+    }
   }
 
   if (!restaurantId) {
@@ -413,6 +438,41 @@ export function RecipesClient() {
             Custo total: R${" "}
             {(costData[selectedRecipe.id]?.totalCost ?? 0).toFixed(2)}
           </p>
+          {otherRestaurants.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-amber-100">
+              <p className="text-sm font-medium text-amber-900 mb-2">
+                Copiar para outro restaurante
+              </p>
+              <div className="flex gap-2 flex-wrap items-center">
+                <select
+                  value={copyTargetId ?? ""}
+                  onChange={(e) =>
+                    setCopyTargetId(e.target.value ? +e.target.value : null)
+                  }
+                  className="px-4 py-2 rounded-lg border border-amber-200 text-black"
+                >
+                  <option value="">Selecione...</option>
+                  {otherRestaurants.map((r) => (
+                    <option key={r.id} value={r.id}>
+                      {r.fantasyName}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  onClick={handleCopyToRestaurant}
+                  disabled={!copyTargetId || copying}
+                  className="px-4 py-2 rounded-lg bg-amber-600 text-white text-sm font-medium hover:bg-amber-700 disabled:opacity-50"
+                >
+                  {copying ? "Copiando..." : "Copiar"}
+                </button>
+              </div>
+              <p className="text-xs text-amber-700 mt-1">
+                Ingredientes com mesmo nome serão vinculados ao estoque do
+                destino. O custo será recalculado.
+              </p>
+            </div>
+          )}
         </div>
       )}
     </div>
