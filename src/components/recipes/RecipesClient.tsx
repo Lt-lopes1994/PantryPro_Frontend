@@ -154,7 +154,7 @@ export function RecipesClient() {
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 required
               />
             </div>
@@ -166,7 +166,7 @@ export function RecipesClient() {
                 type="text"
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
               />
             </div>
           </div>
@@ -179,7 +179,7 @@ export function RecipesClient() {
                 <select
                   value={item.stockItemId || ""}
                   onChange={(e) => updateItem(i, "stockItemId", +e.target.value)}
-                  className="flex-1 px-4 py-2 rounded-lg border border-amber-200"
+                  className="flex-1 px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 >
                   <option value="">Produto</option>
                   {stockItems.map((s) => (
@@ -193,7 +193,7 @@ export function RecipesClient() {
                   placeholder="Nome"
                   value={item.itemName}
                   onChange={(e) => updateItem(i, "itemName", e.target.value)}
-                  className="w-40 px-4 py-2 rounded-lg border border-amber-200"
+                  className="w-40 px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 />
                 <input
                   type="number"
@@ -201,7 +201,7 @@ export function RecipesClient() {
                   placeholder="Qtd"
                   value={item.quantity || ""}
                   onChange={(e) => updateItem(i, "quantity", +e.target.value || 0)}
-                  className="w-24 px-4 py-2 rounded-lg border border-amber-200"
+                  className="w-24 px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 />
                 <button
                   type="button"

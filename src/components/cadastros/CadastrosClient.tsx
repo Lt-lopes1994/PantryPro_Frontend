@@ -10,7 +10,16 @@ import {
   type Supplier,
 } from "@/lib/api";
 
-const UNIT_CATEGORIES = ["WEIGHT", "VOLUME", "COUNT", "LENGTH", "TIME"];
+const UNIT_CATEGORIES = [
+  { value: "WEIGHT", label: "Peso" },
+  { value: "VOLUME", label: "Volume" },
+  { value: "COUNT", label: "Quantidade" },
+  { value: "LENGTH", label: "Comprimento" },
+  { value: "TIME", label: "Tempo" },
+] as const;
+
+const getCategoryLabel = (value: string) =>
+  UNIT_CATEGORIES.find((c) => c.value === value)?.label ?? value;
 
 export function CadastrosClient() {
   const [activeTab, setActiveTab] = useState<"units" | "categories" | "suppliers">("units");
@@ -147,7 +156,7 @@ export function CadastrosClient() {
                       onChange={(e) =>
                         setUnitForm({ ...unitForm, name: e.target.value })
                       }
-                      className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                      className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                       placeholder="Quilograma"
                       required
                     />
@@ -162,7 +171,7 @@ export function CadastrosClient() {
                       onChange={(e) =>
                         setUnitForm({ ...unitForm, symbol: e.target.value })
                       }
-                      className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                      className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                       placeholder="kg"
                       required
                     />
@@ -176,11 +185,11 @@ export function CadastrosClient() {
                       onChange={(e) =>
                         setUnitForm({ ...unitForm, category: e.target.value })
                       }
-                      className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                      className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                     >
                       {UNIT_CATEGORIES.map((c) => (
-                        <option key={c} value={c}>
-                          {c}
+                        <option key={c.value} value={c.value}>
+                          {c.label}
                         </option>
                       ))}
                     </select>
@@ -217,7 +226,7 @@ export function CadastrosClient() {
                         <td className="py-3 px-4 text-amber-900">{u.name}</td>
                         <td className="py-3 px-4 text-amber-700">{u.symbol}</td>
                         <td className="py-3 px-4 text-amber-700">
-                          {u.category}
+                          {getCategoryLabel(u.category)}
                         </td>
                       </tr>
                     ))}
@@ -250,7 +259,7 @@ export function CadastrosClient() {
                           name: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                      className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                       required
                     />
                   </div>
@@ -267,7 +276,7 @@ export function CadastrosClient() {
                           description: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                      className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                     />
                   </div>
                 </div>
@@ -331,7 +340,7 @@ export function CadastrosClient() {
                           name: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                      className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                       required
                     />
                   </div>
@@ -348,7 +357,7 @@ export function CadastrosClient() {
                           taxId: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                      className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                       required
                     />
                   </div>
@@ -365,7 +374,7 @@ export function CadastrosClient() {
                           email: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                      className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                     />
                   </div>
                   <div>
@@ -381,7 +390,7 @@ export function CadastrosClient() {
                           phone: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                      className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                     />
                   </div>
                 </div>

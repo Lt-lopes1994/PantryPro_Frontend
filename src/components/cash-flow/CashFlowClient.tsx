@@ -148,7 +148,7 @@ export function CashFlowClient() {
                   step="0.01"
                   value={openingBalance || ""}
                   onChange={(e) => setOpeningBalance(+e.target.value || 0)}
-                  className="w-40 px-4 py-2 rounded-lg border border-amber-200"
+                  className="w-40 px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 />
               </div>
               <div className="flex gap-2">
@@ -230,7 +230,7 @@ export function CashFlowClient() {
                     onChange={(e) =>
                       setTxForm({ ...txForm, category: e.target.value })
                     }
-                    className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                    className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                     required
                   >
                     <option value="">Selecione</option>
@@ -256,7 +256,7 @@ export function CashFlowClient() {
                     onChange={(e) =>
                       setTxForm({ ...txForm, value: +e.target.value || 0 })
                     }
-                    className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                    className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                     required
                   />
                 </div>
@@ -270,7 +270,7 @@ export function CashFlowClient() {
                     onChange={(e) =>
                       setTxForm({ ...txForm, description: e.target.value })
                     }
-                    className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                    className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                   />
                 </div>
               </div>

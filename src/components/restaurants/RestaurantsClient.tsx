@@ -79,7 +79,7 @@ export function RestaurantsClient() {
                 onChange={(e) =>
                   setForm({ ...form, bussinesName: e.target.value })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 required
               />
             </div>
@@ -93,7 +93,7 @@ export function RestaurantsClient() {
                 onChange={(e) =>
                   setForm({ ...form, fantasyName: e.target.value })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 required
               />
             </div>
@@ -105,7 +105,7 @@ export function RestaurantsClient() {
                 type="text"
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 required
               />
             </div>
@@ -117,7 +117,7 @@ export function RestaurantsClient() {
                 type="text"
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
               />
             </div>
             <div>
@@ -128,7 +128,7 @@ export function RestaurantsClient() {
                 type="text"
                 value={form.taxId}
                 onChange={(e) => setForm({ ...form, taxId: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 placeholder="00000000000199"
                 required
               />

@@ -196,7 +196,7 @@ export function PurchasesClient() {
                 onChange={(e) =>
                   setForm({ ...form, supplierId: +e.target.value })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 required
               >
                 <option value="">Selecione</option>
@@ -217,7 +217,7 @@ export function PurchasesClient() {
                 onChange={(e) =>
                   setForm({ ...form, orderNumber: e.target.value })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
               />
             </div>
             <div>
@@ -230,7 +230,7 @@ export function PurchasesClient() {
                 onChange={(e) =>
                   setForm({ ...form, invoiceNumber: e.target.value })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
               />
             </div>
           </div>
@@ -245,7 +245,7 @@ export function PurchasesClient() {
                   onChange={(e) =>
                     updateItem(i, "stockItemId", +e.target.value)
                   }
-                  className="flex-1 px-4 py-2 rounded-lg border border-amber-200"
+                  className="flex-1 px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 >
                   <option value="">Produto</option>
                   {stockItems.map((s) => (
@@ -262,7 +262,7 @@ export function PurchasesClient() {
                   onChange={(e) =>
                     updateItem(i, "quantityOrdered", +e.target.value || 0)
                   }
-                  className="w-24 px-4 py-2 rounded-lg border border-amber-200"
+                  className="w-24 px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 />
                 <input
                   type="number"
@@ -272,7 +272,7 @@ export function PurchasesClient() {
                   onChange={(e) =>
                     updateItem(i, "unitPrice", +e.target.value || 0)
                   }
-                  className="w-28 px-4 py-2 rounded-lg border border-amber-200"
+                  className="w-28 px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 />
                 <button
                   type="button"
@@ -298,7 +298,7 @@ export function PurchasesClient() {
             <textarea
               value={form.notes}
               onChange={(e) => setForm({ ...form, notes: e.target.value })}
-              className="w-full px-4 py-2 rounded-lg border border-amber-200"
+              className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
               rows={2}
             />
           </div>

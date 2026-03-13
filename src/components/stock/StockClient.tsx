@@ -158,7 +158,7 @@ export function StockClient() {
                 onChange={(e) =>
                   setForm({ ...form, itemName: e.target.value })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 required
               />
             </div>
@@ -173,7 +173,7 @@ export function StockClient() {
                 onChange={(e) =>
                   setForm({ ...form, quantity: +e.target.value || 0 })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
               />
             </div>
             <div>
@@ -187,7 +187,7 @@ export function StockClient() {
                 onChange={(e) =>
                   setForm({ ...form, unitPrice: +e.target.value || 0 })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 required
               />
             </div>
@@ -200,7 +200,7 @@ export function StockClient() {
                 onChange={(e) =>
                   setForm({ ...form, unitId: +e.target.value || 0 })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
               >
                 <option value="">Selecione</option>
                 {units.map((u) => (
@@ -219,7 +219,7 @@ export function StockClient() {
                 onChange={(e) =>
                   setForm({ ...form, supplierId: +e.target.value || 0 })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
               >
                 <option value="">Selecione</option>
                 {suppliers.map((s) => (
@@ -266,7 +266,7 @@ export function StockClient() {
                     type: e.target.value as "IN" | "OUT" | "ADJUSTMENT",
                   })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
               >
                 <option value="IN">Entrada</option>
                 <option value="OUT">Saída</option>
@@ -287,7 +287,7 @@ export function StockClient() {
                     quantity: +e.target.value || 0,
                   })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 required
               />
             </div>
@@ -301,7 +301,7 @@ export function StockClient() {
                 onChange={(e) =>
                   setMovementForm({ ...movementForm, reason: e.target.value })
                 }
-                className="w-full px-4 py-2 rounded-lg border border-amber-200"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
                 placeholder="Opcional"
               />
             </div>
