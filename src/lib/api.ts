@@ -131,6 +131,9 @@ export interface Recipe {
   description?: string | null;
   ingredients: string[];
   instructions: string[];
+  waterCost?: number | null;
+  gasCost?: number | null;
+  laborCost?: number | null;
   RecipeItem: RecipeItem[];
 }
 
@@ -158,6 +161,9 @@ export interface CreateRecipe {
   restaurantId: number;
   ingredients?: string[];
   instructions?: string[];
+  waterCost?: number;
+  gasCost?: number;
+  laborCost?: number;
   items: CreateRecipeItem[];
 }
 

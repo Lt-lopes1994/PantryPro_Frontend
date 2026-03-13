@@ -336,8 +336,10 @@ export function PurchasesClient() {
           <div className="space-y-2 mb-4">
             {receiving.items.map((pi) => (
               <div key={pi.id} className="flex items-center gap-4">
-                <span className="w-48">{pi.stockItem.itemName}</span>
-                <span className="text-amber-600 text-sm">
+                <span className="w-48 font-medium text-amber-900">
+                  {pi.stockItem.itemName}
+                </span>
+                <span className="text-amber-700 text-sm">
                   Ordenado: {pi.quantityOrdered}
                 </span>
                 <input
@@ -353,7 +355,7 @@ export function PurchasesClient() {
                       [pi.id]: +e.target.value || 0,
                     })
                   }
-                  className="w-24 px-3 py-1.5 rounded border border-amber-200"
+                  className="w-24 px-3 py-1.5 rounded border border-amber-200 text-black placeholder:text-gray-500"
                 />
               </div>
             ))}

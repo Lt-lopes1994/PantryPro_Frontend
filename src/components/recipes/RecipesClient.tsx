@@ -16,10 +16,18 @@ export function RecipesClient() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
-  const [costData, setCostData] = useState<Record<number, { totalCost: number }>>({});
+  const [costData, setCostData] = useState<
+    Record<
+      number,
+      { totalCost: number; waterCost?: number; gasCost?: number; laborCost?: number }
+    >
+  >({});
   const [form, setForm] = useState({
     name: "",
     description: "",
+    waterCost: 0,
+    gasCost: 0,
+    laborCost: 0,
     items: [{ stockItemId: 0, itemName: "", quantity: 0 }],
   });
   const [error, setError] = useState("");
@@ -48,9 +56,17 @@ export function RecipesClient() {
           recipesApi.getCost(r.id, restaurantId).then((c) => ({ id: r.id, cost: c }))
         )
       ).then((costs) => {
-        const map: Record<number, { totalCost: number }> = {};
+        const map: Record<
+          number,
+          { totalCost: number; waterCost?: number; gasCost?: number; laborCost?: number }
+        > = {};
         costs.forEach((c) => {
-          map[c.id] = { totalCost: c.cost.totalCost };
+          map[c.id] = {
+            totalCost: c.cost.totalCost,
+            waterCost: c.cost.waterCost,
+            gasCost: c.cost.gasCost,
+            laborCost: c.cost.laborCost,
+          };
         });
         setCostData(map);
       });
@@ -75,9 +91,19 @@ export function RecipesClient() {
         name: form.name,
         description: form.description || undefined,
         restaurantId,
+        waterCost: form.waterCost || undefined,
+        gasCost: form.gasCost || undefined,
+        laborCost: form.laborCost || undefined,
         items: validItems,
       });
-      setForm({ name: "", description: "", items: [{ stockItemId: 0, itemName: "", quantity: 0 }] });
+      setForm({
+        name: "",
+        description: "",
+        waterCost: 0,
+        gasCost: 0,
+        laborCost: 0,
+        items: [{ stockItemId: 0, itemName: "", quantity: 0 }],
+      });
       setShowForm(false);
       const data = await recipesApi.list(restaurantId);
       setRecipes(data);
@@ -220,6 +246,56 @@ export function RecipesClient() {
               + Adicionar ingrediente
             </button>
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div>
+              <label className="block text-sm font-medium text-amber-900 mb-1">
+                Água (R$)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                placeholder="0"
+                value={form.waterCost || ""}
+                onChange={(e) =>
+                  setForm({ ...form, waterCost: +e.target.value || 0 })
+                }
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-amber-900 mb-1">
+                Gás (R$)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                placeholder="0"
+                value={form.gasCost || ""}
+                onChange={(e) =>
+                  setForm({ ...form, gasCost: +e.target.value || 0 })
+                }
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-amber-900 mb-1">
+                Funcionários (R$)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                placeholder="0"
+                value={form.laborCost || ""}
+                onChange={(e) =>
+                  setForm({ ...form, laborCost: +e.target.value || 0 })
+                }
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 text-black placeholder:text-gray-500"
+              />
+            </div>
+          </div>
           <button
             type="submit"
             disabled={loading}
@@ -255,12 +331,12 @@ export function RecipesClient() {
                 <td className="py-3 px-4">
                   <span className="font-medium text-amber-900">{r.name}</span>
                   {r.description && (
-                    <span className="block text-sm text-amber-600">
+                    <span className="block text-sm text-amber-800">
                       {r.description}
                     </span>
                   )}
                 </td>
-                <td className="py-3 px-4 text-amber-700">
+                <td className="py-3 px-4 text-amber-900">
                   {r.RecipeItem?.length || 0} itens
                 </td>
                 <td className="py-3 px-4 text-right font-medium text-amber-900">
@@ -294,7 +370,7 @@ export function RecipesClient() {
           </h3>
           <ul className="space-y-2">
             {selectedRecipe.RecipeItem?.map((i) => (
-              <li key={i.id} className="flex justify-between text-amber-700">
+              <li key={i.id} className="flex justify-between text-amber-900">
                 <span>
                   {i.itemName} — {i.quantity}{" "}
                   {i.unit?.symbol || ""}
@@ -308,6 +384,30 @@ export function RecipesClient() {
                 </span>
               </li>
             ))}
+            {(costData[selectedRecipe.id]?.waterCost ?? 0) > 0 && (
+              <li className="flex justify-between text-amber-900">
+                <span>Água</span>
+                <span>
+                  R$ {(costData[selectedRecipe.id]?.waterCost ?? 0).toFixed(2)}
+                </span>
+              </li>
+            )}
+            {(costData[selectedRecipe.id]?.gasCost ?? 0) > 0 && (
+              <li className="flex justify-between text-amber-900">
+                <span>Gás</span>
+                <span>
+                  R$ {(costData[selectedRecipe.id]?.gasCost ?? 0).toFixed(2)}
+                </span>
+              </li>
+            )}
+            {(costData[selectedRecipe.id]?.laborCost ?? 0) > 0 && (
+              <li className="flex justify-between text-amber-900">
+                <span>Funcionários</span>
+                <span>
+                  R$ {(costData[selectedRecipe.id]?.laborCost ?? 0).toFixed(2)}
+                </span>
+              </li>
+            )}
           </ul>
           <p className="mt-4 font-medium text-amber-900">
             Custo total: R${" "}
