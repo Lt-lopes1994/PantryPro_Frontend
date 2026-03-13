@@ -2,6 +2,21 @@
 
 Este projeto segue [Semantic Versioning](https://semver.org/) (MAJOR.MINOR.PATCH).
 
+## Fluxo de branches
+
+- **develop** – branch de trabalho. Faça commits e push aqui.
+- **main** – branch de produção. Recebe merge via PR a partir de develop.
+
+```bash
+# Trabalhar na develop
+git checkout develop
+git add .
+git commit -m "feat: sua alteração"
+git push origin develop
+
+# No GitHub: criar PR develop → main e fazer o merge
+```
+
 ## Comandos
 
 ```bash

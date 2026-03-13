@@ -10,6 +10,17 @@ import {
   type StockItem,
 } from "@/lib/api";
 
+const PURCHASE_STATUS_LABELS: Record<string, string> = {
+  PENDING: "Pendente",
+  CONFIRMED: "Confirmado",
+  SHIPPED: "Enviado",
+  RECEIVED: "Recebido",
+  CANCELLED: "Cancelado",
+};
+
+const getPurchaseStatusLabel = (status: string) =>
+  PURCHASE_STATUS_LABELS[status] ?? status;
+
 export function PurchasesClient() {
   const { currentRestaurant } = useRestaurant();
   const [purchases, setPurchases] = useState<Purchase[]>([]);
@@ -413,7 +424,7 @@ export function PurchasesClient() {
                         : "bg-amber-100 text-amber-800"
                     }`}
                   >
-                    {p.status}
+                    {getPurchaseStatusLabel(p.status)}
                   </span>
                 </td>
                 <td className="py-3 px-4 text-right font-medium text-amber-900">
