@@ -132,7 +132,19 @@ export function CashFlowClient() {
           </h2>
           {!showOpenForm ? (
             <button
-              onClick={() => setShowOpenForm(true)}
+              onClick={() => {
+                const closed = periods
+                  .filter((p) => p.status === "CLOSED")
+                  .sort(
+                    (a, b) =>
+                      new Date(b.closedAt || 0).getTime() -
+                      new Date(a.closedAt || 0).getTime()
+                  );
+                if (closed[0]?.closingBalance != null) {
+                  setOpeningBalance(closed[0].closingBalance);
+                }
+                setShowOpenForm(true);
+              }}
               className="px-6 py-2 rounded-lg bg-amber-600 text-white font-medium hover:bg-amber-700"
             >
               Abrir caixa
