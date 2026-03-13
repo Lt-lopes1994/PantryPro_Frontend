@@ -6,6 +6,7 @@ import {
   purchasesApi,
   stockApi,
   suppliersApi,
+  cashFlowApi,
   type Purchase,
   type StockItem,
 } from "@/lib/api";
@@ -43,6 +44,10 @@ export function PurchasesClient() {
   const [receiveQuantities, setReceiveQuantities] = useState<
     Record<number, number>
   >({});
+  const [withdrawFromCash, setWithdrawFromCash] = useState(false);
+  const [currentCashPeriod, setCurrentCashPeriod] = useState<{
+    id: number;
+  } | null>(null);
   const [error, setError] = useState("");
 
   const restaurantId = currentRestaurant?.id;
@@ -63,6 +68,17 @@ export function PurchasesClient() {
         .finally(() => setLoading(false));
     }
   }, [restaurantId]);
+
+  useEffect(() => {
+    if (restaurantId && receiving) {
+      cashFlowApi
+        .getCurrentPeriod(restaurantId)
+        .then((p) => setCurrentCashPeriod(p ? { id: p.id } : null))
+        .catch(() => setCurrentCashPeriod(null));
+    } else {
+      setCurrentCashPeriod(null);
+    }
+  }, [restaurantId, receiving]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -149,8 +165,34 @@ export function PurchasesClient() {
     setLoading(true);
     try {
       await purchasesApi.receive(receiving.id, restaurantId, items);
+
+      if (
+        withdrawFromCash &&
+        currentCashPeriod &&
+        receiving.finalValue > 0
+      ) {
+        try {
+          await cashFlowApi.addTransaction(
+            currentCashPeriod.id,
+            restaurantId,
+            {
+              type: "EXPENSE",
+              category: "Fornecedores",
+              value: receiving.finalValue,
+              description: `Compra #${receiving.id} - ${receiving.supplier.name}`,
+            }
+          );
+        } catch (cashErr) {
+          console.error("Erro ao registrar saída no caixa:", cashErr);
+          setError(
+            "Compra recebida, mas não foi possível registrar a saída no caixa."
+          );
+        }
+      }
+
       setReceiving(null);
       setReceiveQuantities({});
+      setWithdrawFromCash(false);
       const data = await purchasesApi.list(restaurantId);
       setPurchases(data);
     } catch (err) {
@@ -360,6 +402,24 @@ export function PurchasesClient() {
               </div>
             ))}
           </div>
+          {currentCashPeriod && receiving.finalValue > 0 && (
+            <div className="mb-4 flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="withdrawFromCash"
+                checked={withdrawFromCash}
+                onChange={(e) => setWithdrawFromCash(e.target.checked)}
+                className="rounded border-amber-300"
+              />
+              <label
+                htmlFor="withdrawFromCash"
+                className="text-sm text-amber-900"
+              >
+                Retirar R$ {receiving.finalValue.toFixed(2)} do caixa ao
+                confirmar
+              </label>
+            </div>
+          )}
           <div className="flex gap-2">
             <button
               onClick={handleReceive}
@@ -372,6 +432,7 @@ export function PurchasesClient() {
               onClick={() => {
                 setReceiving(null);
                 setError("");
+                setWithdrawFromCash(false);
               }}
               className="px-6 py-2 rounded-lg border border-amber-200 text-amber-700 hover:bg-amber-50"
             >
